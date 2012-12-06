@@ -13,9 +13,17 @@ typedef struct JSON_obj_node JSON_obj_node;
 
 typedef JSON_node *JSON;
 typedef JSON_obj_node *JSON_object;
+/**
+ * A JSON array must be an array of JSON pointers
+ * terminated by a null object (where type is null)
+ */
 typedef JSON *JSON_array; 
 
-/** This is essentially a hash tree
+
+typedef void (*json_objWalker_t)(char *key, JSON *value);
+typedef void (*json_arrWalker_t)(JSON *value);
+
+/** This is essentially a binary tree
  * left is less than, and right is greater than 
  */
 struct JSON_obj_node {
@@ -66,5 +74,11 @@ bool json_is_null(JSON j);
 void json_free(JSON j);
 void json_object_free(JSON_object o);
 void json_array_free(JSON_array a);
+
+// functions to walk through objects or arrays
+// json_walk_object is recursive and json_walk_array
+// is iterative
+void json_walk_object(JSON_object obj, json_objWalker_t walker);
+void json_walk_array(JSON_array arr, json_arrWalker_t walker);
 
 #endif

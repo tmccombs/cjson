@@ -4,6 +4,9 @@
 #include <string.h>
 
 
+
+
+
 //start an empty JSON object i.e. NULL
 //
 JSON_object json_new_object() { return NULL; }
@@ -166,4 +169,32 @@ void json_object_free(JSON_object o){
     free(o->key); 
     json_free(o->value);
     free(o);
+}
+
+
+/**
+ * walk over a JSON object and call the walker function on each object
+ * It passes a pointer to the value, so the function can change the 
+ * value in place if desired
+ */
+void json_walk_object(JSON_object obj, json_objWalker_t walker)
+{
+
+    if( ! obj ){
+        return;  //return if it is a null object
+    }
+    if ( obj->left ) {
+        json_walk_object(obj->left, walker);
+    }
+    walker(obj->key, &(obj->value));
+    if ( obj->right) {
+        json_walk_object(obj->right, walker);
+    }
+}
+
+void json_walk_array(JSON_array arr, json_arrWalker_t walker)
+{
+    while(*arr) {
+        walker(arr);
+    }
 }
