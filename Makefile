@@ -44,5 +44,7 @@ cjson.so: pyjson.o libjson.a
 
 
 clean:
-	rm json.tab.c json.tab.h
 	rm *.o
+	rm *.so
+	rm json.tab.c json.tab.h lex.yy.c
+	rm main

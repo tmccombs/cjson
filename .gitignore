@@ -16,3 +16,10 @@
 *.out
 *.app
 main
+
+
+# generated files
+
+json.tab.h
+json.tab.c
+lex.yy.c
