@@ -20,8 +20,11 @@
 
 
 #include "json_types.h"
-#include "parse.h"
+#include "json.h"
 #include "jsonxml.h"
+
+
+void test_encoder(void);
 
 
 int main(int argc, char *argv[]){
@@ -31,9 +34,31 @@ int main(int argc, char *argv[]){
     s=json2xml(j);
 
     printf("%s\n",s);
+
+
     
     free(s);
     json_free(j);
+
+    test_encoder();
+
     return 0;
+
+}
+
+
+void test_encoder(void)
+{
+    JSON j;
+    char *s;
+    j = json_parse_str("{\"name\":\"Thayne\",\"Languages\":[\"C\",\"Python\",\"c++\",4.5,2],\"nullVal\":null,\"young\":true}");
+
+    printf("The json string (reencoded): \n\n");
+
+    json_fencode(stderr, j);
+    putchar('\n');
+
+    json_free(j);
+    return;
 
 }

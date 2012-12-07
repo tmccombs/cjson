@@ -34,7 +34,7 @@
 
 
 #include "json.tab.h"
-#include "parse.h"
+#include "json.h"
 
 
 extern FILE *yyin;

@@ -18,7 +18,7 @@
 */
 #include "pyjson.h"
 
-#include "parse.h"
+#include "json.h"
 
 
 static PyObject *SyntaxError;

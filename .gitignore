@@ -18,6 +18,10 @@
 main
 
 
+# precompiled headers
+*.gch
+
+
 # generated files
 
 json.tab.h

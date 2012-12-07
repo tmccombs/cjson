@@ -38,8 +38,8 @@ typedef JSON_obj_node *JSON_object;
 typedef JSON *JSON_array; 
 
 
-typedef void (*json_objWalker_t)(char *key, JSON *value);
-typedef void (*json_arrWalker_t)(JSON *value);
+typedef void (*json_objWalker_t)(char *key, JSON *value, void *payload);
+typedef void (*json_arrWalker_t)(JSON *value, void *payload);
 
 /** This is essentially a binary tree
  * left is less than, and right is greater than 
@@ -96,7 +96,9 @@ void json_array_free(JSON_array a);
 // functions to walk through objects or arrays
 // json_walk_object is recursive and json_walk_array
 // is iterative
-void json_walk_object(JSON_object obj, json_objWalker_t walker);
-void json_walk_array(JSON_array arr, json_arrWalker_t walker);
+//
+// payload is passed to walker on each call
+void json_walk_object(JSON_object obj, json_objWalker_t walker, void * payload);
+void json_walk_array(JSON_array arr, json_arrWalker_t walker, void *payload);
 
 #endif

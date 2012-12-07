@@ -194,25 +194,28 @@ void json_object_free(JSON_object o){
  * walk over a JSON object and call the walker function on each object
  * It passes a pointer to the value, so the function can change the 
  * value in place if desired
+ *
+ * The payload is passed to the walker function at each call, this can be used to
+ * pass additional information to the function, or for the function to store information
+ * in a reentrant manner
  */
-void json_walk_object(JSON_object obj, json_objWalker_t walker)
+void json_walk_object(JSON_object obj, json_objWalker_t walker, void *payload)
 {
 
     if( ! obj ){
         return;  //return if it is a null object
     }
-    if ( obj->left ) {
-        json_walk_object(obj->left, walker);
-    }
-    walker(obj->key, &(obj->value));
-    if ( obj->right) {
-        json_walk_object(obj->right, walker);
-    }
+
+    json_walk_object(obj->left, walker,payload);
+
+    walker(obj->key, &(obj->value), payload);
+
+    json_walk_object(obj->right, walker,payload);
 }
 
-void json_walk_array(JSON_array arr, json_arrWalker_t walker)
+void json_walk_array(JSON_array arr, json_arrWalker_t walker, void *payload)
 {
     while(*arr) {
-        walker(arr);
+        walker(arr,payload);
     }
 }

@@ -5,12 +5,15 @@ CC=gcc
 
 
 objects=main_test.o jsonxml.o strTools.o libjson.so
-JSON_objects=json.tab.o lex.yy.o json_types.o
+JSON_objects=json.tab.o lex.yy.o json_types.o encode.o
 
 main: main_test.o jsonxml.o strTools.o libjson.a
 	$(CC) $^ -o main
 
 src-build: json.tab.c json.tab.h lex.yy.c
+
+debug:  CC += -DDEBUG -g
+debug:  main
 
 
 json.tab.c json.tab.h: json.y
@@ -20,7 +23,7 @@ json.tab.c json.tab.h: json.y
 lex.yy.c: json.l
 	$(LEX) $^
 
-json.tab.o: json.tab.c parse.h
+json.tab.o: json.tab.c json.h
 	gcc -Wall -fPIC -c json.tab.c
 
 lex.yy.o: lex.yy.c 

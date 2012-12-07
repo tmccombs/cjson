@@ -25,4 +25,7 @@
 JSON_node *json_parse_file(FILE *f);
 JSON json_parse_str(const char *input);
 
+// encode JSON as a string and write to fp
+int json_fencode(FILE *fp, JSON json);
+
 #endif
